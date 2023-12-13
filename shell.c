@@ -1,5 +1,11 @@
 #include "shell.h"
 
+void handle_sigint(int signal)
+{
+	(void)signal;
+	exit(0);
+}
+
 /**
  * parser - parses the string
  *
@@ -53,6 +59,8 @@ int main(void)
 	char *line = NULL;
 	size_t buffer = 0;
 	ssize_t read;
+
+	signal(SIGINT, handle_sigint);
 
 	while (1)
 	{
