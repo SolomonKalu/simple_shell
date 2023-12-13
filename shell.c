@@ -9,6 +9,7 @@
 void parser(char *line)
 {
 	char *args[BUFFER_SIZE];
+	pid_t my_pid;
 	int i = 0;
 
 	char *token = strtok(line, " \t");
@@ -24,7 +25,7 @@ void parser(char *line)
 	if (strcmp(args[0], "exit") == 0)
 		exit(0);
 
-	pid_t my_pid = fork();
+	my_pid = fork();
 
 	if (my_pid == 0)
 	{
