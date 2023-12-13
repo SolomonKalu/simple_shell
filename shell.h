@@ -28,6 +28,9 @@ size_t _strcspn(const char *str, const char *reject);
 int _strcmp(const char *str1, const char *str2);
 void remove_whitespace(char *str);
 
+/*builtins*/
+void env_builtin(void);
+
 /*exit*/
 
 void my_exit_built(char **args);

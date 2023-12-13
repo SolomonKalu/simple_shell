@@ -25,14 +25,23 @@ size_t _strcspn(const char *str, const char *reject)
 	return (count);
 }
 
+/**
+ * _strcmp - compares two strings
+ * @str1: first string
+ * @str2: second string
+ *
+ * Return: different number
+ */
+
 int _strcmp(const char *str1, const char *str2)
 {
-	while (*str1 && (*str1 == *str2)) {
+	while (*str1 && (*str1 == *str2))
+	{
 		str1++;
 		str2++;
 	}
 
-	return (*(unsigned char*)str1 - *(unsigned char*)str2);
+	return (*(unsigned char *)str1 - *(unsigned char *)str2);
 }
 
 /**

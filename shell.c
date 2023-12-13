@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * handle_sigint - handles signal interuption
+ * @signal: void
+ *
+ */
+
 void handle_sigint(int signal)
 {
 	(void)signal;
@@ -31,6 +37,11 @@ void parser(char *line)
 
 	if (_strcmp(args[0], "exit") == 0)
 		exit(0);
+
+	else if (_strcmp(args[0], "env") == 0)
+	{
+		env_builtin();
+	}
 
 	my_pid = fork();
 
@@ -77,7 +88,13 @@ int main(void)
 		if (*line == '\0')
 			continue;
 
-		parser(line);
+		if (_strcmp(line, "env") == 0)
+		{
+			env_builtin();
+			continue;
+		}
+		else
+			parser(line);
 	}
 	free(line);
 	return (0);
