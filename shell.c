@@ -29,7 +29,7 @@ void parser(char *line)
 
 	args[i] = NULL;
 
-	if (strcmp(args[0], "exit") == 0)
+	if (_strcmp(args[0], "exit") == 0)
 		exit(0);
 
 	my_pid = fork();

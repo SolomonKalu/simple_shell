@@ -25,6 +25,16 @@ size_t _strcspn(const char *str, const char *reject)
 	return (count);
 }
 
+int _strcmp(const char *str1, const char *str2)
+{
+	while (*str1 && (*str1 == *str2)) {
+		str1++;
+		str2++;
+	}
+
+	return (*(unsigned char*)str1 - *(unsigned char*)str2);
+}
+
 /**
  * remove_whitespace - function that removes trailing whitespaces
  * @str: string from which whitespaces are removed
