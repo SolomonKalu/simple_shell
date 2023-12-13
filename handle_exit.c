@@ -6,11 +6,11 @@
  */
 void my_exit_built(char **args)
 {
-	int x;
+	int status;
 
 	if (args[1])
 	{
-		x = atoi(args[1]);
+		status = atoi(args[1]);
 	}
-	exit(x);
+	exit(status);
 }
