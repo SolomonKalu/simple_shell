@@ -18,6 +18,8 @@
 
 extern char **environ;
 
+#define BUFFER_SIZE 1024
+
 /*prototypes*/
 
 void _print(char *string);

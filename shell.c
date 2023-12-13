@@ -1,52 +1,74 @@
 #include "shell.h"
 
 /**
- * main - envoke shell
+ * parser - parses the string
+ *
+ * @line: the string to be parsed
+ */
+
+void parser(char *line)
+{
+	char *args[BUFFER_SIZE];
+	int i = 0;
+
+	char *token = strtok(line, " \t");
+
+	while (token != NULL)
+	{
+		args[i++] = token;
+		token = strtok(NULL, " ");
+	}
+
+	args[i] = NULL;
+
+	if (strcmp(args[0], "exit") == 0)
+		exit(0);
+
+	pid_t my_pid = fork();
+
+	if (my_pid == 0)
+	{
+		execve(args[0], args, environ);
+		perror("execve failed");
+		exit(1);
+	}
+	else if (my_pid > 0)
+		wait(NULL);
+	else
+	{
+		perror("fork failed");
+		exit(1);
+	}
+}
+
+/**
+ * main - main function
  *
  * Return: 0
-*/
+ */
 
 int main(void)
 {
-	char *readline, *token;
-	char **args = { NULL };
-	pid_t my_pid;
-	int status;
+	char *line = NULL;
+	size_t buffer = 0;
+	ssize_t read;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			_print("($) ");
-		readline = mod_getline();
-		if (readline == NULL)
-		{
-			if (isatty(STDIN_FILENO))
-				_print("\n");
-			break;
-		}
+		read = getline(&line, &buffer, stdin);
 
-		readline[_strcspn(readline, "\n")] = '\0';
-		remove_whitespace(readline);
-		remove_leading(readline);
-		if (*readline == '\0')
+		if (read == -1)
+			exit(1);
+
+		line[_strcspn(line, "\n")] = '\0';
+
+		if (*line == '\0')
 			continue;
 
-		token = strtok(readline, " ");
-		while (token != NULL)
-		{
-			my_pid = fork();
-			if (my_pid == 0)
-			{
-				execve(readline, args, environ);
-				perror("execve");
-			}
-			else if (my_pid > 0)
-				wait(&status);
-			else
-				perror("fork");
-			token = strtok(NULL, " ");
-		}
-		free(readline);
+		parser(line);
 	}
+	free(line);
 	return (0);
 }
