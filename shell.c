@@ -3,6 +3,7 @@
 void handle_sigint(int signal)
 {
 	(void)signal;
+	_print("\n");
 	exit(0);
 }
 
